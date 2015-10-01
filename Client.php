@@ -11,3 +11,6 @@ require_once('./TCPEngine.php');
 $manager = new TCPEngine();
 
 $manager->createSocket();
+$manager->connectToServer("localhost", 7000);
+
+$manager->sendMessage("HEELOOOO");
