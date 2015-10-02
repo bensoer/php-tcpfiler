@@ -11,5 +11,5 @@ require_once('./Client.php');
 $clientService = new Client("SEND");
 
 $clientService->connect();
-$clientService->send("HELLOOOO");
+$clientService->executeRequest("./data/testData.txt");
 

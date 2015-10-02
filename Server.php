@@ -19,6 +19,35 @@ while(1){
 
     $data = $manager->receiveMessage();
 
-    print($data);
+    if(substr($data,0,3) == "GET"){
+
+        print("GET Request Received\n");
+
+        $file = substr($data,4,strlen($data)-4);
+        $fileContents = file_get_contents("./uploads/" . $file);
+
+        $manager->sendMessage($fileContents);
+
+    }
+
+    if(substr($data,0,4) == "SEND"){
+
+        print("SEND Request Received\n");
+
+        $firstSpace = strpos($data, ' ', 6);
+
+        $filename = substr($data, 5, $firstSpace - 5);
+
+        print("Saving To File: " . $filename . "\n");
+
+        $secondSpace = strpos($data, ' ', $firstSpace);
+        $fileContents = substr($data, $secondSpace+1, strlen($data) - $secondSpace);
+
+        print("Saving Contents: " . $fileContents . "\n");
+
+        $fp = fopen("./uploads/" . $filename, "w") or die("Unable to open file");
+        fwrite($fp, $fileContents);
+        fclose($fp);
+    }
 
 }

@@ -84,6 +84,7 @@ class TCPEngine
 
     public function sendMessage($message){
 
+        print("Sending Message\n");
         if($this->isServer){
             socket_send($this->sessionSocketPointer, $message, strlen($message), 0);
             $this->sendDoneMessage();
@@ -122,14 +123,12 @@ class TCPEngine
             if($position === false){
                 //done could not be found
                 print("The done was not found. Keep Going\n");
-                $totalMessage += $message;
+                $totalMessage = $totalMessage . $message;
             }else{
                 //the done was found
                 $content = substr($message, 0, $position);
-                print($position . "\n");
                 print("Done was found, Were done\n");
-                print($content . "\n");
-                $totalMessage += $content;
+                $totalMessage = $totalMessage . $content;
                 break;
             }
 
