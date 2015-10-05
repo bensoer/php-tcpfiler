@@ -7,7 +7,7 @@
  */
 
 
-require_once("./TCPEngine.php");
+require_once("./tcpfiler/TCPEngine.php");
 class Client {
 
     private $mode;
@@ -32,18 +32,25 @@ class Client {
         $this->manager->connectToServer($host, $port);
     }
 
-    public function executeRequest($fileDirectory){
+    public function executeRequest($fileDirectory, $returnFileContents = false){
 
 
         $message = "";
         if($this->mode == "SEND"){
-            $fileContents = file_get_contents($fileDirectory);
+            print($fileDirectory);
+            print(realpath($fileDirectory));
+            print(get_include_path());
+            $fileContents = file_get_contents($fileDirectory, FILE_USE_INCLUDE_PATH);
             $lastSlash = strrpos($fileDirectory, "/") + 1;
             $filename = substr($fileDirectory, $lastSlash, strlen($fileDirectory) - $lastSlash);
             print("Sending File: " . $filename . "\n");
             $message = "SEND " . $filename . " " . $fileContents;
 
             $this->manager->sendMessage($message);
+
+            if($returnFileContents){
+                return $fileContents;
+            }
         }
 
         if($this->mode == "GET"){
@@ -59,10 +66,14 @@ class Client {
             $lastSlash = strrpos($fileDirectory, "/");
             $filename = substr($fileDirectory, $lastSlash, strlen($fileDirectory) - $lastSlash);
 
-            $fp = fopen("./data/" . $filename, "w") or die("Unable to open file");;
+            $fp = fopen("./tcpfiler/data/" . $filename, "w") or die("Unable to open file");;
             fwrite($fp, $data);
             fclose($fp);
             //file_put_contents("./data/" . $filename, $data);
+
+            if($returnFileContents){
+                return $data;
+            }
 
         }
 

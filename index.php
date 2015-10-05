@@ -21,7 +21,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         </head>
         <style>
-            body{
+            /*body{
                 background: linear-gradient(246deg, #ba68c8, #b388ff , #e83114, #e814d7, #ff5722, #c3c62b, #4caf50, #ffeb3b );
                 background-size: 1200% 1200%;
 
@@ -45,10 +45,10 @@
                 0%{background-position:58% 0%}
                 50%{background-position:43% 100%}
                 100%{background-position:58% 0%}
-            }
+            }*/
         </style>
 
-        <body class="teal accent-2">
+        <body id="gradient">
 
             <div class="container">
 
@@ -58,14 +58,14 @@
 
 
                 <div class="row">
-                    <form class="col s12" method="POST" action="">
+                    <form class="col s12" method="POST" action="executeRequest.php" enctype="multipart/form-data">
                         <div class="card-panel z-depth-5">
                             <div class="row">
                                 <div class="col s6">
                                     <h6>Enter the File Name to retrieve or be stored on the Server</h6>
 
                                     <div class="input-field col s6">
-                                        <input id="file_name" type="text" class="validate">
+                                        <input id="file_name" name="file_name" type="text" class="validate">
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                     <div class="switch">
                                         <label>
                                             GET
-                                            <input type="checkbox">
+                                            <input type="checkbox" name="mode_switch">
                                             <span class="lever"></span>
                                             SEND
                                         </label>
@@ -91,10 +91,10 @@
                                     <div class="file-field input-field">
                                         <div class="btn">
                                             <span>File</span>
-                                            <input type="file">
+                                            <input type="file" name="file_upload">
                                         </div>
                                         <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text">
+                                            <input class="file-path validate" type="text" name="file_upload_text">
                                         </div>
                                     </div>
                                 </div>
@@ -126,6 +126,8 @@
             <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
             <!-- Compiled and minified JavaScript -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+
+            <script src="gradient-engine.js"></script>
 
         </body>
 </html>
